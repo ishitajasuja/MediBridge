@@ -1,0 +1,171 @@
+.auth-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Branding Section */
+.auth-branding {
+  display: none;
+  background-color: #0284c7;
+  color: white;
+  padding: 3rem;
+}
+
+.branding-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.branding-message {
+  margin-top: 2rem;
+}
+
+.branding-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.branding-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+}
+
+.branding-dots {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.dot {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active {
+  background-color: white;
+}
+
+/* Forms Section */
+.auth-forms {
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.mobile-logo-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #0284c7;
+}
+
+.mobile-logo-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #0284c7;
+}
+
+/* Tabs */
+.tab-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  background-color: #f1f5f9;
+  padding: 0.25rem;
+}
+
+.tab-button {
+  padding: 0.75rem;
+  border: none;
+  background: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.tab-button.active {
+  background-color: white;
+  color: #0284c7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  position: relative;
+}
+
+.tab-panel {
+  width: 100%;
+}
+
+.animate-fade {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .auth-container {
+    flex-direction: row;
+  }
+
+  .auth-branding {
+    display: block;
+    width: 50%;
+  }
+
+  .auth-forms {
+    width: 50%;
+    padding: 2.5rem;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+}
+
