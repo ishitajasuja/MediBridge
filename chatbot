@@ -1,0 +1,65 @@
+import streamlit as st
+from supabase import create_client
+from groq import Groq
+
+# Supabase credentials
+SUPABASE_URL = "https://kzovbnxjiifsogvzimgv.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6b3ZibnhqaWlmc29ndnppbWd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3ODYzODAsImV4cCI6MjA1OTM2MjM4MH0.UCFx5noiijrYSr7w98YgaDB054b6njdFYqzbF8vEE8A"
+
+# Groq credentials
+GROQ_API_KEY = "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"
+GROQ_MODEL = "llama3-70b-8192"
+
+# Initialize Supabase and Groq clients
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+groq_client = Groq(api_key=GROQ_API_KEY)
+
+st.title("🩺 Medical Session Chatbot")
+
+# Ask for patient ID
+patient_id = st.text_input("Enter Patient ID")
+
+if patient_id:
+    # Fetch sessions for this patient
+    sessions_response = supabase.table("sessions").select("session_id").eq("patient_id", patient_id).execute()
+    session_ids = [s["session_id"] for s in sessions_response.data]
+
+    if session_ids:
+        selected_session = st.selectbox("Select a session", session_ids)
+
+        if selected_session:
+            # Fetch reports for this session
+            reports_response = supabase.table("reports").select("summary").eq("session_id", selected_session).execute()
+            report_summaries = [r["summary"] for r in reports_response.data if r.get("summary")]
+
+            # Fetch prescriptions for this session
+            prescriptions_response = supabase.table("prescriptions").select("notes").eq("session_id", selected_session).execute()
+            prescription_notes = [p["notes"] for p in prescriptions_response.data if p.get("notes")]
+
+            # Combine context
+            knowledge_base = "\n\n".join(report_summaries + prescription_notes)
+
+            st.markdown("#### Chat with the session's medical info")
+            user_question = st.text_input("Ask a question about this session")
+
+            if user_question:
+                with st.spinner("Thinking..."):
+                    chat_input = f"""Based on the following medical session info, answer the user's question in a descriptive but factual tone.
+
+Medical Session Info:
+{knowledge_base}
+
+User Question:
+{user_question}
+"""
+                    response = groq_client.chat.completions.create(
+                        model=GROQ_MODEL,
+                        messages=[
+                            {"role": "system", "content": "You are a medical session assistant. Stick to the facts based on the provided data."},
+                            {"role": "user", "content": chat_input}
+                        ]
+                    )
+                    st.markdown("### 💬 Response")
+                    st.write(response.choices[0].message.content)
+    else:
+        st.warning("No sessions found for this patient.")
