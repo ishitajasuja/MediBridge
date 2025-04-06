@@ -1,19 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import AuthPage from "./components/AuthPage"
-import ForgotPasswordPage from "./components/ForgotPasswordPage"
-import ResetPasswordPage from "./components/ResetPasswordPage"
-import "./App.css"
+import { Routes, Route } from "react-router-dom"
+import LandingPage from "./pages/LandingPage"
+import PatientSignupPage from "./pages/PatientSignupPage";
+import DoctorSignupPage from "./pages/DoctorSignupPage";
+import PatientLoginPage from "./pages/PatientLoginPage";
+import DoctorLoginPage from "./pages/DoctorLoginPage";
+import CreateProfilePage from "./pages/CreateProfilePage"
+import PatientDashboard from "./pages/PatientDashboard"
+import DoctorDashboard from "./pages/DoctorDashboard"
+import ManagePatients from "./pages/ManagePatients";
+import Prescrption from "./pages/Prescription"
+import Reports from "./pages/Reports"
+import "./styles/App.css"
 
 function App() {
   return (
-    <Router>
+    <div className="app">
       <Routes>
-        <Route path="/" element={<AuthPage />} />
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup/patient" element={<PatientSignupPage />} />
+      <Route path="/signup/doctor" element={<DoctorSignupPage />} />
+      <Route path="/login/patient" element={<PatientLoginPage />} />
+      <Route path="/login/doctor" element={<DoctorLoginPage />} />
+        <Route path="/create-profile" element={<CreateProfilePage />} />
+        <Route path="/dashboard/patient" element={<PatientDashboard />} />
+        <Route path="/dashboard/doctor" element={<DoctorDashboard />} />
+        <Route path="/dashboard/doctor/patients" element={<ManagePatients />} />
+        <Route path="/dashboard/patient/prescriptions" element={<Prescrption />} />
+        <Route path="/dashboard/patient/reports" element={<Reports />} />
       </Routes>
-    </Router>
+    </div>
   )
 }
 
